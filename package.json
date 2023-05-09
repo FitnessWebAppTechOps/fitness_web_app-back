@@ -1,0 +1,26 @@
+{
+  "name": "fitness_web_app-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node ./dist/src/index.js",
+    "test": "tsc && jest ./dist/index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FitnessWebAppTechOps/fitness_web_app-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FitnessWebAppTechOps/fitness_web_app-back/issues"
+  },
+  "homepage": "https://github.com/FitnessWebAppTechOps/fitness_web_app-back#readme",
+  "devDependencies": {
+    "@types/node": "^20.1.1",
+    "typescript": "^5.0.4"
+  }
+}
