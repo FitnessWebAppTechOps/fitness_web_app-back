@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "tsc && node ./dist/src/index.js",
+    "test": "tsc && jest ./dist/index.test.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,7 @@
   },
   "homepage": "https://github.com/FitnessWebAppTechOps/fitness_web_app-back#readme",
   "devDependencies": {
-    "@types/node": "^20.1.2",
+    "@types/node": "^20.1.1",
     "typescript": "^5.0.4"
   }
 }
