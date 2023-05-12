@@ -8,6 +8,7 @@ export interface IUser {
   age: number;
   gender: Gender;
   fitnessProfile: IFitnessProfile;
+  createdAt: Date;
 }
 
 export interface IFitnessProfile {

@@ -1,3 +1,4 @@
+
 {
   "name": "fitness_web_app-back",
   "version": "1.0.0",
@@ -24,6 +25,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "mongoose": "^7.1.1"
   }
 }
