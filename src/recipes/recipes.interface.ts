@@ -1,5 +1,5 @@
 export interface IRecipe {
-  id?: string;
+  _id?: string;
   recipeId: number;
   mealType: MealType;
   macros: IMacros;
