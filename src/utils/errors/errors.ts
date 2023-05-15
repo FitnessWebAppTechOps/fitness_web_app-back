@@ -11,7 +11,7 @@ export class ApplicationError extends Error implements jayson.JSONRPCError {
 }
 /* istanbul ignore next */
 export class UserError extends ApplicationError {
-  constructor(message = "question Error", status = 400) {
+  constructor(message = "User Error", status = 400) {
     super(message, status);
   }
 }
