@@ -7,7 +7,7 @@ export class ValidationError extends UserError {
   }
 }
 
-export class UserNotFoundError extends UserError {
+export class UserNotFound extends UserError {
   /* istanbul ignore next */
   constructor(message = "user not found") {
     super(message, 404);
