@@ -6,7 +6,7 @@ import morgan from "morgan";
 import { errorMiddleware } from "./utils/errors/errorHandler";
 import { config } from "./config";
 import { AppRouter } from "./router";
-import * as cors from "cors";
+import cors from "cors";
 
 export class Server {
   public app: express.Application;

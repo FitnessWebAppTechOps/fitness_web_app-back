@@ -28,7 +28,7 @@ export class UsersRepository {
     return UserModel.find().exec();
   }
 
-  static getUserById(userId: number): Promise<IUser | null> {
+  static getUserById(userId: string): Promise<IUser | null> {
     return UserModel.findOne({ _id: userId }).exec();
   }
 
