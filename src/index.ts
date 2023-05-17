@@ -1,29 +1,26 @@
-import * as mongoose from 'mongoose';
-import { logger } from './utils/logger';
-import { SeverityLevel } from './utils/severityLevel';
-import { Server } from './server';
+import mongoose from 'mongoose';
 import { config } from './config';
+import { Server } from './express/server';
+import { logger } from './utils/logger';
 
-((): void => {
-  mongoose.connect(config.db.connectionString, {
-    dbName: config.db.dbName,
-  });
+const { mongo, service } = config;
 
-  mongoose.connection.on('connecting', () => {
-    logger.log(SeverityLevel.Informational, '[MongoDB] connecting...');
-  });
+const initializeMongo = async () => {
+    logger.info('Connecting to Mongo...');
 
-  mongoose.connection.on('connected', () => {
-    logger.log(SeverityLevel.Informational, '[MongoDB] connected');
-  });
+    await mongoose.connect(mongo.uri);
 
-  mongoose.connection.on('error', () => {
-    logger.log(SeverityLevel.Informational, '[MongoDB] error');
-  });
+    logger.info('Mongo connection established');
+};
 
-  mongoose.connection.on('disconnected', () => {
-    logger.log(SeverityLevel.Informational, '[MongoDB] disconnected');
-  });
+const main = async () => {
+    await initializeMongo();
 
-  Server.startServer();
-})();
+    const server = new Server(service.port);
+
+    await server.start();
+
+    logger.info(`Server started on port: ${service.port}`);
+};
+
+main().catch(logger.error);
