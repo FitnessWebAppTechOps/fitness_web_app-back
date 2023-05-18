@@ -1,31 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { UsersRepository } from "./users.repository";
 import { Gender, IFitnessProfile, IUser } from "./users.interface";
-import { UserNotFoundError } from "../utils/errors/users";
 import { UserModel } from "./users.model";
 
 export class UsersManager {
-  static async createUser(
-    username: string,
-    password: string,
-    country: string,
-    email: string,
-    name: string,
-    age: number,
-    gender: Gender,
-    fitnessProfile: IFitnessProfile
-  ): Promise<IUser> {
-    return UsersRepository.createUser(
-      username,
-      password,
-      country,
-      email,
-      name,
-      age,
-      gender,
-      fitnessProfile
-    );
-  }
+  
 
   static async getAllUsers(): Promise<IUser[]> {
     const users = await UsersRepository.getAllUsers();

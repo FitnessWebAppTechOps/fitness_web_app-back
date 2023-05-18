@@ -1,14 +1,18 @@
 import { Router } from "express";
-import { validateRequest } from "../../utils/express/wrappers";
+import { validateRequest, wrapController } from "../../utils/express/wrappers";
 import { UsersController } from "./users.controller";
 import { 
-    createUsersRequestSchema, getAllUsersRequestSchema, getUsersByQueryRequestSchema
+    createUsersRequestSchema, getAllUsersRequestSchema, getUsersByQueryRequestSchema, updateUserRequestSchema, deleteUserRequestSchema
 } from "./users.validations";
 
 export const usersRouter = Router();
 
-usersRouter.post("/", validateRequest(createUsersRequestSchema));
+usersRouter.post("/", validateRequest(createUsersRequestSchema), wrapController(UsersController.createUser));
 
 usersRouter.get("/getAll", validateRequest(getAllUsersRequestSchema));
 
-usersRouter.get("/", validateRequest(getUsersByQueryRequestSchema))
+usersRouter.get("/", validateRequest(getUsersByQueryRequestSchema));
+
+usersRouter.put("/:id", validateRequest(updateUserRequestSchema));
+
+usersRouter.delete(":/id", validateRequest(deleteUserRequestSchema));

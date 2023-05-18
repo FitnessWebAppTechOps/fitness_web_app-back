@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Gender } from "./users.interface";
+import { zodMongoObjectId } from "../../utils/zod";
 
 const fitnessProfileSchema = z
   .object({
@@ -40,6 +41,24 @@ export const getAllUsersRequestSchema = z.object({
 //GET /api/users
 export const getUsersByQueryRequestSchema = z.object({
   body: z.object({}),
-  query: z.object({}), // change
+  query: UserSchema.partial(), 
   params: z.object({}),
 });
+
+//PUT /api/users/:id
+export const updateUserRequestSchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({
+        id: zodMongoObjectId,
+  }),
+})
+
+//DELETE /api/users/:id
+export const deleteUserRequestSchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({
+        id: zodMongoObjectId,
+  }),
+})
