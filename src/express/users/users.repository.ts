@@ -3,6 +3,7 @@ import { UserModel } from "./users.model";
 
 export class UsersRepository {
   static createUser(
+    // TODO: encrypt user password before saving it in the db using "npm bcrypt"
     username: string,
     password: string,
     country: string,
