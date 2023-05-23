@@ -59,6 +59,13 @@ export const getUserByIdRequestSchema = z.object({
   }),
 })
 
+// GET /api/users/count
+export const getUsersCountRequestSchema = z.object({
+  body: z.object({}),
+  query: UserSchema.partial(),
+  params: z.object({}),
+})
+
 //PUT /api/users/:id
 export const updateUserRequestSchema = z.object({
   body: UserSchema.partial(),

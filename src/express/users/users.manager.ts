@@ -8,6 +8,7 @@ import {
 } from "./users.interface";
 import { UserModel } from "./users.model";
 import { UsersDocumentNotFoundError } from "../../utils/errors";
+import { query } from "express";
 
 export class UsersManager {
   static async createUser(user: IUser): Promise<UserDocument> {
@@ -22,8 +23,16 @@ export class UsersManager {
     return UserModel.findById(userId).orFail(new UsersDocumentNotFoundError(userId)).exec();
   }
 
+  static async getUsersCount(query: Partial<IUser>): Promise<number> {
+    return UserModel.count(query);
+  }
+
   static async updateUser(userId: string, update: Partial<IUser>): Promise<UserDocument> {
     return UserModel.findByIdAndUpdate(userId, update, { new: true }).orFail(new UsersDocumentNotFoundError(userId)).exec();
+  }
+
+  static async deleteUserRequestSchema(userId: string): Promise<UserDocument> {
+    return UserModel.findByIdAndDelete(userId).orFail(new UsersDocumentNotFoundError(userId)).exec();
   }
   
 }
