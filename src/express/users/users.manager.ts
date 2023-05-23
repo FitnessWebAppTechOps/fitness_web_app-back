@@ -1,76 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { UsersRepository } from "./users.repository";
-import { Gender, IFitnessProfile, IUser } from "./users.interface";
+import {
+  Gender,
+  IFitnessProfile,
+  IUser,
+  UserDocument,
+} from "./users.interface";
 import { UserModel } from "./users.model";
+import { UsersDocumentNotFoundError } from "../../utils/errors";
 
 export class UsersManager {
+  static async createUser(user: IUser): Promise<UserDocument> {
+    return UserModel.create(user);
+  }
+
+  static async getUsersByQuery(query: Partial<IUser>, step: number, limit?: number): Promise<UserDocument[]> {
+    return UserModel.find(query, {}, limit ? { limit, skip: limit * step } : {}).exec();
+  }
+
+  static async getUserById(userId: string): Promise<UserDocument> {
+    return UserModel.findById(userId).orFail(new UsersDocumentNotFoundError(userId)).exec();
+  }
+
+  static async updateUser(userId: string, update: Partial<IUser>): Promise<UserDocument> {
+    return UserModel.findByIdAndUpdate(userId, update, { new: true }).orFail(new UsersDocumentNotFoundError(userId)).exec();
+  }
   
-
-  static async getAllUsers(): Promise<IUser[]> {
-    const users = await UsersRepository.getAllUsers();
-    if (users.length !== 0) return users;
-    throw new UserNotFoundError();
-  }
-
-  static async getUserById(userId: string): Promise<IUser | null> {
-    const user = await UsersRepository.getUserById(userId);
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async getUserByCountry(country: string): Promise<IUser | null> {
-    const user = await UsersRepository.getUserByCountry(country);
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async getUserByAge(age: number): Promise<IUser | null> {
-    const user = await UsersRepository.getUserByAge(age);
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async getUserByGender(gender: string): Promise<IUser | null> {
-    const user = await UsersRepository.getUserByGender(gender);
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async deleteUserById(userId: string): Promise<IUser | null> {
-    const user = await UsersRepository.deleteUserById(userId);
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async updateUserDetailsById(
-    userId: string,
-    country: string,
-    name: string,
-    age: number,
-    gender: Gender,
-    fitnessProfile: IFitnessProfile
-  ): Promise<IUser | null> {
-    const user = await UsersRepository.updateUserDetailsById(
-      userId,
-      country,
-      name,
-      age,
-      gender,
-      fitnessProfile
-    );
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
-
-  static async updateUserFitnessProfileById(
-    userId: string,
-    fitnessProfile: IFitnessProfile
-  ): Promise<IUser | null> {
-    const user = await UsersRepository.updateUserFitnessProfileById(
-      userId,
-      fitnessProfile
-    );
-    if (!user) throw new UserNotFoundError();
-    return user;
-  }
 }

@@ -20,7 +20,7 @@ const UserSchema = z
     name: z.string(),
     age: z.number(),
     gender: z.nativeEnum(Gender),
-    fitnessprofile: fitnessProfileSchema,
+    fitnessProfile: fitnessProfileSchema,
   })
   .required();
 
@@ -41,24 +41,39 @@ export const getAllUsersRequestSchema = z.object({
 //GET /api/users
 export const getUsersByQueryRequestSchema = z.object({
   body: z.object({}),
-  query: UserSchema.partial(), 
+  query: z
+    .object({
+      step: z.coerce.number().min(0).default(0),
+      limit: z.coerce.number().optional(),
+    })
+    .merge(UserSchema.partial()),
   params: z.object({}),
 });
 
-//PUT /api/users/:id
-export const updateUserRequestSchema = z.object({
+// GET /api/users/:id
+export const getUserByIdRequestSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
-        id: zodMongoObjectId,
+    id: zodMongoObjectId,
   }),
 })
+
+//PUT /api/users/:id
+export const updateUserRequestSchema = z.object({
+  body: UserSchema.partial(),
+  query: z.object({}),
+  params: z.object({
+    id: zodMongoObjectId,
+  }),
+});
 
 //DELETE /api/users/:id
 export const deleteUserRequestSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
-        id: zodMongoObjectId,
+    id: zodMongoObjectId,
   }),
-})
+});
+

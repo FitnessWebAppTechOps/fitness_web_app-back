@@ -1,28 +1,9 @@
-import { Gender, IFitnessProfile, IUser } from "./users.interface";
+import { Gender, IFitnessProfile, IUser, UserDocument } from "./users.interface";
 import { UserModel } from "./users.model";
 
 export class UsersRepository {
-  static createUser(
-    // TODO: encrypt user password before saving it in the db using "npm bcrypt"
-    username: string,
-    password: string,
-    country: string,
-    email: string,
-    name: string,
-    age: number,
-    gender: Gender,
-    fitnessProfile: IFitnessProfile
-  ): Promise<IUser> {
-    return UserModel.create({
-      username,
-      password,
-      country,
-      email,
-      name,
-      age,
-      gender,
-      fitnessProfile,
-    });
+  static createUser(tempUser: UserDocument): Promise<UserDocument> {
+    return UserModel.create(tempUser);
   }
 
   static getAllUsers(): Promise<IUser[]> {
