@@ -20,7 +20,7 @@ export class UsersController {
   }
 
   static async getUsersCount(req: TypedRequest<typeof getUsersCountRequestSchema>, res: Response ) {
-    res.json(await UsersManager.getUserCount(req.query))
+    res.json(await UsersManager.getUsersCount(req.query))
   }
 
   static async updateUser(req: TypedRequest<typeof updateUserRequestSchema>, res: Response ) {

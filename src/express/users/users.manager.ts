@@ -31,7 +31,7 @@ export class UsersManager {
     return UserModel.findByIdAndUpdate(userId, update, { new: true }).orFail(new UsersDocumentNotFoundError(userId)).exec();
   }
 
-  static async deleteUserRequestSchema(userId: string): Promise<UserDocument> {
+  static async deleteUser(userId: string): Promise<UserDocument> {
     return UserModel.findByIdAndDelete(userId).orFail(new UsersDocumentNotFoundError(userId)).exec();
   }
   
