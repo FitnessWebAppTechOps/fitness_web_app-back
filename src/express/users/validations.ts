@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Gender } from "./users.interface";
+import { GenderTypes } from "./interface";
 import { zodMongoObjectId } from "../../utils/zod";
 
 const fitnessProfileSchema = z
@@ -13,13 +13,14 @@ const fitnessProfileSchema = z
 
 const UserSchema = z
   .object({
-    username: z.string(),
+    name: z.string(),
     password: z.string(),
     country: z.string(),
     email: z.string().email(),
-    name: z.string(),
+    firstName: z.string(),
+    lastName: z.string(),
     age: z.number(),
-    gender: z.nativeEnum(Gender),
+    gender: z.nativeEnum(GenderTypes),
     fitnessProfile: fitnessProfileSchema,
   })
   .required();
@@ -57,14 +58,14 @@ export const getUserByIdRequestSchema = z.object({
   params: z.object({
     id: zodMongoObjectId,
   }),
-})
+});
 
 // GET /api/users/count
 export const getUsersCountRequestSchema = z.object({
   body: z.object({}),
   query: UserSchema.partial(),
   params: z.object({}),
-})
+});
 
 //PUT /api/users/:id
 export const updateUserRequestSchema = z.object({
@@ -83,4 +84,3 @@ export const deleteUserRequestSchema = z.object({
     id: zodMongoObjectId,
   }),
 });
-

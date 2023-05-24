@@ -1,7 +1,9 @@
 import * as mongoose from "mongoose";
-import { Gender, IUser } from "./users.interface";
+import { GenderTypes, IUser } from "./interface";
 
-const fitnessProfileSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+
+const fitnessProfileSchema = new Schema(
   {
     weight: {
       type: Number,
@@ -22,13 +24,12 @@ const fitnessProfileSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    id: true,
   }
 );
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       required: true,
       unique: true,
@@ -36,7 +37,6 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      unique: true,
     },
     country: {
       type: String,
@@ -47,9 +47,15 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    name: {
+    firstName: {
       type: String,
       required: true,
+      index: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      index: true,
     },
     age: {
       type: Number,
@@ -57,7 +63,7 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: Gender,
+      enum: GenderTypes,
       required: true,
     },
     fitnessProfile: {
@@ -71,11 +77,9 @@ const userSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    id: true,
   }
 );
 
-userSchema.index({ name: 1 });
 
 export const UserModel = mongoose.model<IUser & mongoose.Document>(
   "IUser",

@@ -1,11 +1,12 @@
 export interface IUser {
-  username: string;
+  name: string;
   password: string;
   country: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   age: number;
-  gender: Gender;
+  gender: GenderTypes;
   fitnessProfile: IFitnessProfile;
 }
 
@@ -16,10 +17,10 @@ export interface IFitnessProfile {
   trainingFrequency: number;
 }
 
-export enum Gender {
-  male = "MAIL",
-  female = "FEMALE",
-  other = "OTHER",
+export enum GenderTypes {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
 export interface UserDocument extends IUser {
