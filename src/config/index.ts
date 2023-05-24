@@ -19,9 +19,9 @@ export const config = {
       .default("mongodb://localhost")
       .required()
       .asString(),
-    featuresCollectionName: env
-      .get("FEATURES_COLLECTION_NAME")
-      .default("features")
+    usersCollectionName: env
+      .get("USERS_COLLECTION_NAME")
+      .default("users")
       .required()
       .asString(),
   },

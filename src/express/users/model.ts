@@ -33,6 +33,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     password: {
       type: String,
@@ -46,16 +47,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     firstName: {
       type: String,
       required: true,
-      index: true,
     },
     lastName: {
       type: String,
       required: true,
-      index: true,
     },
     age: {
       type: Number,

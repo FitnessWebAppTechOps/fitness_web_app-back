@@ -3,7 +3,7 @@ import { usersRouter } from './users/router';
 
 export const appRouter = Router();
 
-appRouter.use('/api/features', usersRouter);
+appRouter.use('/api/users', usersRouter);
 
 appRouter.use(['/isAlive', '/isalive', '/health'], (_req, res) => {
     res.status(200).send('alive');

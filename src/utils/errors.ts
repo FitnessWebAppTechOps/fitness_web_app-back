@@ -7,7 +7,7 @@ export class ServiceError extends Error {
 
 export class UsersDocumentNotFoundError extends ServiceError {
     constructor(id: string) {
-        super(404, `No feature found with id ${id}`);
+        super(404, `No users found with id ${id}`);
     }
 }
 
