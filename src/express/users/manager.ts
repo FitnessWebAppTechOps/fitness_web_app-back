@@ -27,14 +27,20 @@ export class UsersManager {
   }
 
   static async getUsersCount(query: Partial<IUser>): Promise<number> {
-    return UserModel.count(query);
+    return UserModel.count(query).exec();
+  }
+
+  static async getAllUsers(): Promise<UserDocument[]> {
+    return UserModel.find().exec();
   }
 
   static async updateUser(
     userId: string,
-    update: Partial<IUser>
+    updatedUserDetails: Partial<IUser>
   ): Promise<UserDocument> {
-    return UserModel.findByIdAndUpdate(userId, update, { new: true })
+    return UserModel.findByIdAndUpdate(userId, updatedUserDetails, {
+      new: true,
+    })
       .orFail(new UsersDocumentNotFoundError(userId))
       .exec();
   }

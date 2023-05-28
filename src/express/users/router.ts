@@ -13,40 +13,16 @@ import {
 
 export const usersRouter = Router();
 
-usersRouter.post(
-  "/",
-  validateRequest(createUsersRequestSchema),
-  wrapController(UsersController.createUser)
-);
+usersRouter.post("/", validateRequest(createUsersRequestSchema), wrapController(UsersController.createUser));
 
-// usersRouter.get("/getAll", validateRequest(getAllUsersRequestSchema));
+usersRouter.get("/all", validateRequest(getAllUsersRequestSchema), wrapController(UsersController.getAllUsers));
 
-usersRouter.get(
-  "/",
-  validateRequest(getUsersByQueryRequestSchema),
-  wrapController(UsersController.getUsersByQuery)
-);
+usersRouter.get("/", validateRequest(getUsersByQueryRequestSchema), wrapController(UsersController.getUsersByQuery));
 
-usersRouter.get(
-  "/:id",
-  validateRequest(getUserByIdRequestSchema),
-  wrapController(UsersController.getUserById)
-);
+usersRouter.get("/:id", validateRequest(getUserByIdRequestSchema), wrapController(UsersController.getUserById));
 
-usersRouter.get(
-  "/count",
-  validateRequest(getUsersCountRequestSchema),
-  wrapController(UsersController.getUsersCount)
-);
+usersRouter.get("/count", validateRequest(getUsersCountRequestSchema), wrapController(UsersController.getUsersCount));
 
-usersRouter.put(
-  "/:id",
-  validateRequest(updateUserRequestSchema),
-  wrapController(UsersController.updateUser)
-);
+usersRouter.put("/:id", validateRequest(updateUserRequestSchema), wrapController(UsersController.updateUser));
 
-usersRouter.delete(
-  ":/id",
-  validateRequest(deleteUserRequestSchema),
-  wrapController(UsersController.deleteUser)
-);
+usersRouter.delete("/:id", validateRequest(deleteUserRequestSchema), wrapController(UsersController.deleteUser));

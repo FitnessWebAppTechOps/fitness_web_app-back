@@ -40,6 +40,10 @@ export class UsersController {
   ) {
     res.json(await UsersManager.getUsersCount(req.query));
   }
+  
+  static async getAllUsers(req: TypedRequest<typeof getUsersCountRequestSchema>, res: Response) {
+    res.json(await UsersManager.getAllUsers());
+  }
 
   static async updateUser(
     req: TypedRequest<typeof updateUserRequestSchema>,
