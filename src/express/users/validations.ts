@@ -7,7 +7,7 @@ const fitnessProfileSchema = z
     weight: z.number(),
     height: z.number(),
     fitnessGoal: z.string(),
-    trainingFrequency: z.number(),
+    trainingFrequency: z.number()
   })
   .required();
 
@@ -19,9 +19,10 @@ const UserSchema = z
     email: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
-    age: z.number(),
+    age: z.number().int(),
+    phoneNumber: z.number().int().gte(9).lte(11),
     gender: z.nativeEnum(GenderTypes),
-    fitnessProfile: fitnessProfileSchema,
+    fitnessProfile: fitnessProfileSchema
   })
   .required();
 
@@ -29,14 +30,14 @@ const UserSchema = z
 export const createUsersRequestSchema = z.object({
   body: UserSchema,
   query: z.object({}),
-  params: z.object({}),
+  params: z.object({})
 });
 
 // GET /api/users/getAll
 export const getAllUsersRequestSchema = z.object({
   body: z.object({}),
   query: z.object({}),
-  params: z.object({}),
+  params: z.object({})
 });
 
 //GET /api/users
@@ -45,10 +46,10 @@ export const getUsersByQueryRequestSchema = z.object({
   query: z
     .object({
       step: z.coerce.number().min(0).default(0),
-      limit: z.coerce.number().optional(),
+      limit: z.coerce.number().optional()
     })
     .merge(UserSchema.partial()),
-  params: z.object({}),
+  params: z.object({})
 });
 
 // GET /api/users/:id
@@ -56,15 +57,16 @@ export const getUserByIdRequestSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
-    id: zodMongoObjectId,
-  }),
+    id: zodMongoObjectId
+  })
 });
 
+//
 // GET /api/users/count
-export const getUsersCountRequestSchema = z.object({
+export const getUsersCounterRequestSchema = z.object({
   body: z.object({}),
   query: UserSchema.partial(),
-  params: z.object({}),
+  params: z.object({})
 });
 
 //PUT /api/users/:id
@@ -72,8 +74,8 @@ export const updateUserRequestSchema = z.object({
   body: UserSchema.partial(),
   query: z.object({}),
   params: z.object({
-    id: zodMongoObjectId,
-  }),
+    id: zodMongoObjectId
+  })
 });
 
 //DELETE /api/users/:id
@@ -81,6 +83,6 @@ export const deleteUserRequestSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
-    id: zodMongoObjectId,
-  }),
+    id: zodMongoObjectId
+  })
 });

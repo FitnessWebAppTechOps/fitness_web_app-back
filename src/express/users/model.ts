@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
 import { GenderTypes, IUser } from "./interface";
+import bcrypt from "bcrypt";
 
 const { Schema } = mongoose;
 
@@ -7,23 +8,23 @@ const fitnessProfileSchema = new Schema(
   {
     weight: {
       type: Number,
-      required: true,
+      required: true
     },
     hight: {
       type: Number,
-      required: true,
+      required: true
     },
     fitnessGoal: {
       type: String,
-      required: true,
+      required: true
     },
     trainingFrequency: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 
@@ -33,53 +34,78 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      index: true,
+      index: true
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
     country: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      index: true,
+      index: true
     },
     firstName: {
       type: String,
-      required: true,
+      required: true
     },
     lastName: {
       type: String,
-      required: true,
+      required: true
     },
     age: {
       type: Number,
-      required: true,
+      required: true
     },
     gender: {
       type: String,
       enum: GenderTypes,
-      required: true,
+      required: true
     },
     fitnessProfile: {
       type: fitnessProfileSchema,
-      required: true,
+      required: true
     },
     createdAt: {
       type: Date,
-      default: Date.now,
-    },
+      default: Date.now
+    }
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 
+userSchema.pre("save", function (next) {
+  const user = this;
+
+  if (!user.isModified("password")) return next();
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+
+    // hash password
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) return next(err);
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+userSchema.methods.comparePassword = function (
+  candidatePassword: string,
+  cb: (arg: any, isMatch?: boolean) => void
+) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
 
 export const UserModel = mongoose.model<IUser & mongoose.Document>(
   "IUser",

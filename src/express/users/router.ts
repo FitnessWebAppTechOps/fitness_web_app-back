@@ -8,21 +8,53 @@ import {
   updateUserRequestSchema,
   deleteUserRequestSchema,
   getUserByIdRequestSchema,
-  getUsersCountRequestSchema,
+  getUsersCounterRequestSchema
 } from "./validations";
+import { authorizeUser } from "../../middleware/auth";
 
 export const usersRouter = Router();
 
-usersRouter.post("/", validateRequest(createUsersRequestSchema), wrapController(UsersController.createUser));
+usersRouter.post("/users/login", UsersController.login);
 
-usersRouter.get("/all", validateRequest(getAllUsersRequestSchema), wrapController(UsersController.getAllUsers));
+usersRouter.post(
+  "/",
+  validateRequest(createUsersRequestSchema),
+  authorizeUser,
+  wrapController(UsersController.createUser)
+);
 
-usersRouter.get("/", validateRequest(getUsersByQueryRequestSchema), wrapController(UsersController.getUsersByQuery));
+usersRouter.get(
+  "/all",
+  validateRequest(getAllUsersRequestSchema),
+  wrapController(UsersController.getAllUsers)
+);
 
-usersRouter.get("/:id", validateRequest(getUserByIdRequestSchema), wrapController(UsersController.getUserById));
+usersRouter.get(
+  "/",
+  validateRequest(getUsersByQueryRequestSchema),
+  wrapController(UsersController.getUsersByQuery)
+);
 
-usersRouter.get("/count", validateRequest(getUsersCountRequestSchema), wrapController(UsersController.getUsersCount));
+usersRouter.get(
+  "/:id",
+  validateRequest(getUserByIdRequestSchema),
+  wrapController(UsersController.getUserById)
+);
 
-usersRouter.put("/:id", validateRequest(updateUserRequestSchema), wrapController(UsersController.updateUser));
+usersRouter.get(
+  "/count",
+  validateRequest(getUsersCounterRequestSchema),
+  wrapController(UsersController.getUsersCounter)
+);
 
-usersRouter.delete("/:id", validateRequest(deleteUserRequestSchema), wrapController(UsersController.deleteUser));
+usersRouter.put(
+  "/:id",
+  validateRequest(updateUserRequestSchema),
+  wrapController(UsersController.updateUser)
+);
+
+usersRouter.delete(
+  "/:id",
+  validateRequest(deleteUserRequestSchema),
+  wrapController(UsersController.deleteUser)
+);

@@ -6,9 +6,12 @@ import {
   deleteUserRequestSchema,
   getUserByIdRequestSchema,
   getUsersByQueryRequestSchema,
-  getUsersCountRequestSchema,
-  updateUserRequestSchema,
+  getUsersCounterRequestSchema,
+  updateUserRequestSchema
 } from "./validations";
+import { IUser } from "./interface";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 export class UsersController {
   static async createUser(
@@ -18,13 +21,40 @@ export class UsersController {
     res.json(await UsersManager.createUser(req.body));
   }
 
+  static async login(
+    req: TypedRequest<typeof createUsersRequestSchema>,
+    res: Response
+  ) {
+    const user: IUser = req.body;
+
+    if (!user.email || !user.password) res.json("Invalid details!");
+
+    const foundUser = await UsersManager.getUsersByQuery(user.email, 0);
+
+    if (!foundUser) res.json("Invalid email!");
+
+    user.comparePassword(user.password, async (err: any, isMatch: boolean) => {
+      if (err || !isMatch) res.json("Invalid password!");
+
+      const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!);
+    });
+
+    res.json("Success!");
+  }
+
   static async getUsersByQuery(
     req: TypedRequest<typeof getUsersByQueryRequestSchema>,
     res: Response
   ) {
     const { step, limit, ...query } = req.query;
 
-    res.json(await UsersManager.getUsersByQuery(query, step, limit));
+    res.json(
+      await UsersManager.getUsersByQuery(
+        query as unknown as keyof IUser,
+        step,
+        limit
+      )
+    );
   }
 
   static async getUserById(
@@ -34,14 +64,17 @@ export class UsersController {
     res.json(await UsersManager.getUserById(req.params.id));
   }
 
-  static async getUsersCount(
-    req: TypedRequest<typeof getUsersCountRequestSchema>,
+  static async getUsersCounter(
+    req: TypedRequest<typeof getUsersCounterRequestSchema>,
     res: Response
   ) {
-    res.json(await UsersManager.getUsersCount(req.query));
+    res.json(await UsersManager.getUsersCounter(req.query));
   }
-  
-  static async getAllUsers(req: TypedRequest<typeof getUsersCountRequestSchema>, res: Response) {
+
+  static async getAllUsers(
+    req: TypedRequest<typeof getUsersCounterRequestSchema>,
+    res: Response
+  ) {
     res.json(await UsersManager.getAllUsers());
   }
 

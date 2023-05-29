@@ -1,4 +1,5 @@
 export interface IUser {
+  _id?: string;
   name: string;
   password: string;
   country: string;
@@ -10,6 +11,10 @@ export interface IUser {
   fitnessProfile: IFitnessProfile;
 }
 
+// export type UserDocument = IUser & {
+//   _id: string;
+// };
+
 export interface IFitnessProfile {
   weight: number;
   height: number;
@@ -20,9 +25,5 @@ export interface IFitnessProfile {
 export enum GenderTypes {
   MALE = "MALE",
   FEMALE = "FEMALE",
-  OTHER = "OTHER",
-}
-
-export interface UserDocument extends IUser {
-  _id: string;
+  OTHER = "OTHER"
 }
