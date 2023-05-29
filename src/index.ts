@@ -5,78 +5,90 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Define User model and database operations (you'll need to replace this with your own database implementation)
-class User {
-  constructor(public username: string, public password: string) {}
+export interface IUser {
+  _id?: string;
+  name: string;
+  password: string;
+  country: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  gender: GenderTypes;
+  fitnessProfile: IFitnessProfile;
 }
 
-class UserDatabase {
-  private users: User[] = [];
-
-  public async addUser(user: User): Promise<void> {
-    this.users.push(user);
-  }
-
-  public async getUser(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
-  }
+export interface IFitnessProfile {
+  weight: number;
+  height: number;
+  fitnessGoal: string;
+  trainingFrequency: number;
 }
 
-const userDatabase = new UserDatabase();
+export enum GenderTypes {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER"
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Error handler middleware
-const errorHandler = (
-  err: Error,
+// Middleware to handle registration
+const registerMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Internal server error" });
+  try {
+    const user: IUser = req.body;
+
+    // Check if the username is already taken (you'll need to replace this with your own database check)
+    const existingUser = await getUserByUsername(user.name);
+    if (existingUser) {
+      res.status(409).json({ error: "Username is already taken" });
+      return;
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
+    // Create a new user
+    const newUser: IUser = {
+      name: user.name,
+      password: hashedPassword,
+      country: user.country,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      age: user.age,
+      gender: user.gender,
+      fitnessProfile: user.fitnessProfile
+    };
+
+    // Store the user in the database (you'll need to replace this with your own database logic)
+    await saveUser(newUser);
+
+    req.body = newUser; // Attach the user object to the request for further processing
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Register route
-app.post(
-  "/register",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { username, password } = req.body;
-
-      // Check if the username is already taken
-      const existingUser = await userDatabase.getUser(username);
-      if (existingUser) {
-        res.status(409).json({ error: "Username is already taken" });
-        return;
-      }
-
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Create a new user
-      const newUser = new User(username, hashedPassword);
-
-      // Store the user in the database
-      await userDatabase.addUser(newUser);
-
-      res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// Login route
-app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+// Middleware to handle login
+const loginMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const { username, password } = req.body;
+    const { name, password } = req.body;
 
-    // Retrieve user from the database
-    const storedUser = await userDatabase.getUser(username);
+    // Retrieve user from the database (you'll need to replace this with your own database logic)
+    const storedUser = await getUserByUsername(name);
 
     if (!storedUser) {
       res.status(401).json({ error: "Invalid username or password" });
@@ -91,30 +103,46 @@ app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    // Create a JWT token
-    const token = jwt.sign(
-      { username: storedUser.username },
-      process.env.JWT_SECRET!,
-      {
-        expiresIn: "1h" // Set the token expiration time
-      }
-    );
-
-    res.json({ token });
+    req.body = storedUser; // Attach the user object to the request for further processing
+    next();
   } catch (error) {
     next(error);
   }
+};
+
+// Route to register a user
+app.post("/register", registerMiddleware, (req: Request, res: Response) => {
+  res
+    .status(201)
+    .json({ message: "User registered successfully", user: req.body });
 });
 
-// 404 route handler
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).json({ error: "Not found" });
+// Route to login
+app.post("/login", loginMiddleware, (req: Request, res: Response) => {
+  // Create a JWT token
+  const token = jwt.sign({ name: req.body.name }, process.env.JWT_SECRET!, {
+    expiresIn: "1h" // Set the token expiration time
+  });
+
+  res.json({ message: "Logged in successfully", token });
 });
 
 // Error handling middleware
-app.use(errorHandler);
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Dummy functions for database operations (replace them with your own database logic)
+
+function getUserByUsername(username: string): Promise<IUser | null> {
+  return Promise.resolve(null);
+}
+
+function saveUser(user: IUser): Promise<void> {
+  return Promise.resolve();
+}
