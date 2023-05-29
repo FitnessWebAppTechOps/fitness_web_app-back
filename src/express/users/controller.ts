@@ -10,8 +10,8 @@ import {
   updateUserRequestSchema
 } from "./validations";
 import { IUser } from "./interface";
+import { UserModel } from "./model";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 
 export class UsersController {
   static async createUser(
@@ -29,17 +29,24 @@ export class UsersController {
 
     if (!user.email || !user.password) res.json("Invalid details!");
 
-    const foundUser = await UsersManager.getUsersByQuery(user.email, 0);
+    const email: string = user.email;
 
-    if (!foundUser) res.json("Invalid email!");
+    const foundUser = await UserModel.findOne({ email });
 
-    user.comparePassword(user.password, async (err: any, isMatch: boolean) => {
-      if (err || !isMatch) res.json("Invalid password!");
+    if (!foundUser) {
+      res.json("Invalid email!");
+      return;
+    }
 
-      const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!);
-    });
+    foundUser.comparePassword(
+      user.password,
+      async (err: any, isMatch?: boolean) => {
+        if (err || !isMatch) res.json("Invalid password!");
 
-    res.json("Success!");
+        const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!);
+        res.json({ token, user: { id: user._id, name: user.name } });
+      }
+    );
   }
 
   static async getUsersByQuery(

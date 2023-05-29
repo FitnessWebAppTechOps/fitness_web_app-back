@@ -101,13 +101,17 @@ userSchema.methods.comparePassword = function (
   candidatePassword: string,
   cb: (arg: any, isMatch?: boolean) => void
 ) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
   });
 };
 
-export const UserModel = mongoose.model<IUser & mongoose.Document>(
-  "IUser",
-  userSchema
-);
+interface IUserModel extends Omit<IUser, "_id">, mongoose.Document {
+  comparePassword: (
+    candidatePassword: string,
+    cb: (err: any, isMatch?: boolean) => void
+  ) => void;
+}
+
+export const UserModel = mongoose.model<IUserModel>("IUser", userSchema);
