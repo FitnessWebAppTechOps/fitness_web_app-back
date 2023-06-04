@@ -1,11 +1,8 @@
 export interface IRecipe {
-  _id?: string;
-  recipeId: number;
+  recipeName: string;
   mealType: MealType;
   macros: IMacros;
   price: number;
-  purchaseDate: Date;
-  createdAt: Date;
 }
 
 export interface IMacros {
@@ -30,3 +27,8 @@ export enum MealType {
   lunch = "LUNCH",
   dinner = "DINNER",
 }
+
+export interface RecipeDocument extends IRecipe {
+  _id?: string;
+}
+
