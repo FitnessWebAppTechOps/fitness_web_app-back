@@ -1,17 +1,18 @@
 export interface IRecipe {
+  userId?: string;
   recipeName: string;
   mealType: MealType;
   macros: IMacros;
-  price?: number;
+  price: number;
 }
 
 export interface IMacros {
   calories: number;
   protein: number;
-  carbs?: number;
-  fat?: number;
+  carbs: number;
+  fat: number;
+  fiber: number;
   cholesterol?: number;
-  fiber?: number;
   sodium?: number;
   water?: number;
   calcium?: number;
@@ -26,9 +27,9 @@ export enum MealType {
   breakfast = "BREAKFAST",
   lunch = "LUNCH",
   dinner = "DINNER",
+  snack = "SNACK",
 }
 
 export interface RecipeDocument extends IRecipe {
   _id?: string;
 }
-

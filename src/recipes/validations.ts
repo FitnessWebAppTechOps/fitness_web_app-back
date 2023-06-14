@@ -23,6 +23,7 @@ const IMacrosSchema = z
 
 const recipesSchema = z
   .object({
+    userId: zodMongoObjectId,
     recipeName: z.string(),
     mealType: z.nativeEnum(MealType),
     macros: IMacrosSchema,
