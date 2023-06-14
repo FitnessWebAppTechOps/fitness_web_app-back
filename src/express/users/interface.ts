@@ -7,7 +7,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   age: number;
-  gender: GenderTypes;
+  gender: Gender;
   fitnessProfile: IFitnessProfile;
 }
 
@@ -20,12 +20,11 @@ export interface IFitnessProfile {
   height: number;
   fitnessGoal: string;
   trainingFrequency: number;
-  bmi: number;
-  bmr: number;
+  bmi?: number;
+  bmr?: number;
 }
 
-export enum GenderTypes {
+export enum Gender {
   MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER"
+  FEMALE = "FEMALE"
 }

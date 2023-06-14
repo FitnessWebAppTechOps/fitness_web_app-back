@@ -3,9 +3,21 @@ import { FilterQuery, Document } from "mongoose";
 import { IUser } from "./interface";
 import { UserModel } from "./model";
 import { UsersDocumentNotFoundError } from "../../utils/errors";
+import { calculateBMI, calculateBMR } from "../../utils/fitnessCalculations";
 
 export class UsersManager {
   static async createUser(user: IUser): Promise<IUser> {
+    user.fitnessProfile.bmi = calculateBMI(
+      user.fitnessProfile.weight,
+      user.fitnessProfile.height
+    );
+    user.fitnessProfile.bmr = calculateBMR(
+      user.fitnessProfile.weight,
+      user.fitnessProfile.height,
+      user.age,
+      user.gender
+    );
+
     return UserModel.create(user);
   }
 
@@ -24,12 +36,12 @@ export class UsersManager {
     ).exec();
   }
 
-  // למה זה עדיין קיים אם יש byQuery?
-  static async getUserById(userId: string): Promise<IUser> {
-    return UserModel.findById(userId)
-      .orFail(new UsersDocumentNotFoundError(userId))
-      .exec();
-  }
+  // // למה זה עדיין קיים אם יש byQuery?
+  // static async getUserById(userId: string): Promise<IUser> {
+  //   return UserModel.findById(userId)
+  //     .orFail(new UsersDocumentNotFoundError(userId))
+  //     .exec();
+  // }
 
   static async getUsersCounter(query: Partial<IUser>): Promise<number> {
     return UserModel.count(query).exec();

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { GenderTypes } from "./interface";
+import { Gender } from "./interface";
 import { zodMongoObjectId } from "../../utils/zod";
 
 const fitnessProfileSchema = z
@@ -23,7 +23,7 @@ const UserSchema = z
     lastName: z.string(),
     age: z.number().int(),
     phoneNumber: z.number().int().gte(9).lte(11),
-    gender: z.nativeEnum(GenderTypes),
+    gender: z.nativeEnum(Gender),
     fitnessProfile: fitnessProfileSchema
   })
   .required();

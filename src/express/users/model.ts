@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { GenderTypes, IUser } from "./interface";
+import { Gender, IUser } from "./interface";
 import bcrypt from "bcrypt";
 
 const { Schema } = mongoose;
@@ -23,12 +23,10 @@ const fitnessProfileSchema = new Schema(
       required: true
     },
     bmi: {
-      type: Number,
-      required: true
+      type: Number
     },
     bmr: {
-      type: Number,
-      required: true
+      type: Number
     }
   },
   {
@@ -72,7 +70,7 @@ const userSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: GenderTypes,
+      enum: Gender,
       required: true
     },
     fitnessProfile: {

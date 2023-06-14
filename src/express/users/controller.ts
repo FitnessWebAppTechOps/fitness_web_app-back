@@ -64,12 +64,12 @@ export class UsersController {
     );
   }
 
-  static async getUserById(
-    req: TypedRequest<typeof getUserByIdRequestSchema>,
-    res: Response
-  ) {
-    res.json(await UsersManager.getUserById(req.params.id));
-  }
+  // static async getUserById(
+  //   req: TypedRequest<typeof getUserByIdRequestSchema>,
+  //   res: Response
+  // ) {
+  //   res.json(await UsersManager.getUserById(req.params.id));
+  // }
 
   static async getUsersCounter(
     req: TypedRequest<typeof getUsersCounterRequestSchema>,
