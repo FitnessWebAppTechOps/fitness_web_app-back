@@ -21,6 +21,14 @@ const fitnessProfileSchema = new Schema(
     trainingFrequency: {
       type: Number,
       required: true
+    },
+    bmi: {
+      type: Number,
+      required: true
+    },
+    bmr: {
+      type: Number,
+      required: true
     }
   },
   {
@@ -70,10 +78,6 @@ const userSchema = new Schema(
     fitnessProfile: {
       type: fitnessProfileSchema,
       required: true
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
     }
   },
   {

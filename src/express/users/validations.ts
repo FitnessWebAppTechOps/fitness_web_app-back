@@ -7,7 +7,9 @@ const fitnessProfileSchema = z
     weight: z.number(),
     height: z.number(),
     fitnessGoal: z.string(),
-    trainingFrequency: z.number()
+    trainingFrequency: z.number(),
+    bmi: z.number(),
+    bmr: z.number()
   })
   .required();
 

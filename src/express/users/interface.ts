@@ -20,6 +20,8 @@ export interface IFitnessProfile {
   height: number;
   fitnessGoal: string;
   trainingFrequency: number;
+  bmi: number;
+  bmr: number;
 }
 
 export enum GenderTypes {
