@@ -2,24 +2,22 @@ import { z } from "zod";
 import { zodMongoObjectId } from "../utils/zod";
 import { MealType } from "./interface";
 
-const IMacrosSchema = z
-  .object({
-    calories: z.number(),
-    protein: z.number(),
-    carbs: z.number(),
-    fat: z.number(),
-    cholesterol: z.number(),
-    fiber: z.number(),
-    sodium: z.number(),
-    water: z.number(),
-    calcium: z.number(),
-    iron: z.number(),
-    magnesium: z.number(),
-    phosphorus: z.number(),
-    zinc: z.number(),
-    potassium: z.number(),
-  })
-  .partial();
+const IMacrosSchema = z.object({
+  calories: z.number(),
+  protein: z.number(),
+  carbs: z.number(),
+  fat: z.number(),
+  fiber: z.number(),
+  cholesterol: z.number().optional(),
+  sodium: z.number().optional(),
+  water: z.number().optional(),
+  calcium: z.number().optional(),
+  iron: z.number().optional(),
+  magnesium: z.number().optional(),
+  phosphorus: z.number().optional(),
+  zinc: z.number().optional(),
+  potassium: z.number().optional(),
+});
 
 const recipesSchema = z
   .object({
@@ -27,7 +25,6 @@ const recipesSchema = z
     recipeName: z.string(),
     mealType: z.nativeEnum(MealType),
     macros: IMacrosSchema,
-    price: z.string().optional(),
   })
   .required();
 

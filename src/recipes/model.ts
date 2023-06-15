@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { config } from "../config";
-import { IRecipe, MealType, RecipeDocument, IMacros } from "./interface";
+import { IRecipe, MealType, IRecipeDocument, IMacros } from "./interface";
 
 const macrosSchema: Schema<IMacros> = new Schema<IMacros>({
   calories: {
@@ -69,12 +69,9 @@ const recipesSchema = new mongoose.Schema<IRecipe>({
     type: macrosSchema,
     required: true,
   },
-  price: {
-    type: Number,
-  },
 });
 
-export const RecipesModel = mongoose.model<RecipeDocument>(
+export const RecipesModel = mongoose.model<IRecipeDocument>(
   config.mongo.recipesCollectionName,
   recipesSchema
 );

@@ -3,7 +3,6 @@ export interface IRecipe {
   recipeName: string;
   mealType: MealType;
   macros: IMacros;
-  price: number;
 }
 
 export interface IMacros {
@@ -30,6 +29,6 @@ export enum MealType {
   snack = "SNACK",
 }
 
-export interface RecipeDocument extends IRecipe {
+export interface IRecipeDocument extends IRecipe {
   _id?: string;
 }

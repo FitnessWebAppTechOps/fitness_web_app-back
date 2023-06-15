@@ -6,4 +6,4 @@ import { RecipesController } from './controller';
 
 export const recipesRouter = Router();
 
-recipesRouter.post('/', validateRequest(createRecipeRequestSchema), wrapController(RecipesController.createRecipes));
+recipesRouter.post('/', validateRequest(createRecipeRequestSchema), wrapController(RecipesController.createRecipe));
