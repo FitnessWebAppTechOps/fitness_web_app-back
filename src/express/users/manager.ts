@@ -36,12 +36,11 @@ export class UsersManager {
     ).exec();
   }
 
-  // // למה זה עדיין קיים אם יש byQuery?
-  // static async getUserById(userId: string): Promise<IUser> {
-  //   return UserModel.findById(userId)
-  //     .orFail(new UsersDocumentNotFoundError(userId))
-  //     .exec();
-  // }
+  static async getUserById(userId: string): Promise<IUser> {
+    return UserModel.findById(userId)
+      .orFail(new UsersDocumentNotFoundError(userId))
+      .exec();
+  }
 
   static async getUsersCounter(query: Partial<IUser>): Promise<number> {
     return UserModel.count(query).exec();

@@ -30,7 +30,7 @@ usersRouter.get(
 );
 
 usersRouter.get(
-  "/",
+  "/:query",
   validateRequest(getUsersByQueryRequestSchema),
   wrapController(UsersController.getUsersByQuery)
 );
