@@ -34,3 +34,5 @@ export const createRecipeRequestSchema = z.object({
   query: z.object({}),
   params: z.object({}),
 });
+
+// TODO: add schemas for all the requests.

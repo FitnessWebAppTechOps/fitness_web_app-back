@@ -8,7 +8,7 @@ export class RecipesManager {
     return RecipesModel.create(recipe);
   }
 
-  static async getRecipeByID(recipeId: string): Promise<IRecipeDocument> {
+  static async getRecipeById(recipeId: string): Promise<IRecipeDocument> {
     return RecipesModel.findById(recipeId)
       .orFail(new RecipesDocumentNotFoundError(recipeId))
       .exec();
