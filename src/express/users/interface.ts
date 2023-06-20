@@ -25,6 +25,6 @@ export interface IFitnessProfile {
 }
 
 export enum Gender {
-  MALE = "MALE",
-  FEMALE = "FEMALE"
+  Male = "MALE",
+  Female = "FEMALE"
 }
