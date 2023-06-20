@@ -1,10 +1,23 @@
-enum TrainingLevel {
+export interface IProgram {
+  userId: number;
+  programId: number;
+  trainingLevel: TrainingLevel;
+  musclesGroups: MusclesGroups;
+  programLength: number;
+  purpose: FitnessGoal;
+  price: number;
+  purchaseDate: Date;
+  startingDate: Date;
+  menu: Options[]; // restructure menu field
+}
+
+export enum TrainingLevel {
   Beginner = "BEGINNER",
   Moderate = "MODERATE",
   Advanced = "ADVANCED"
 }
 
-enum MusclesGroups {
+export enum MusclesGroups {
   Triceps = "TRICEPS",
   Biceps = "BICEPS",
   Forearms = "FOREARMS",
@@ -14,7 +27,7 @@ enum MusclesGroups {
   Legs = "LEGS"
 }
 
-enum FitnessGoal {
+export enum FitnessGoal {
   WeightLoss = "WEIGHT_LOSS",
   MuscleGain = "MUSCLE_GAIN",
   StrengthTraining = "STRENGTH_TRAINING",
@@ -23,4 +36,8 @@ enum FitnessGoal {
 }
 
 // array of recipes names (IRecipe.name)
-type IOptions = string[];
+export type Options = string[];
+
+export interface IProgramDocument extends IProgram {
+  _id?: string;
+}
