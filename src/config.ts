@@ -3,7 +3,7 @@ import "./dotenv";
 
 export const config = {
   service: {
-    port: env.get("PORT").default(8001).required().asPortNumber()
+    port: env.get("PORT").default(8002).required().asPortNumber()
   },
   mongo: {
     uri: env
@@ -12,8 +12,8 @@ export const config = {
       .required()
       .asString(),
     programsCollectionName: env
-      .get("PROGRAMS_COLLECTION_NAME")
-      .default("programs")
+      .get("MENUS_COLLECTION_NAME")
+      .default("menus")
       .required()
       .asString()
   }

@@ -5,8 +5,8 @@ export class ServiceError extends Error {
   }
 }
 
-export class ProgramsDocumentNotFoundError extends ServiceError {
+export class MenusDocumentNotFoundError extends ServiceError {
   constructor(id: string) {
-    super(404, `No programs found with id ${id}`);
+    super(404, `No menus found with id ${id}`);
   }
 }
