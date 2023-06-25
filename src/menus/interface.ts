@@ -1,18 +1,15 @@
-interface MealOption {
-  name: string;
-  description: string;
+import { IRecipe } from "../utils/interfaces/recipes";
+
+export interface Meal {
+  mealNumber: number;
+  options: IRecipe[];
 }
 
-interface Meal {
-  name: string;
-  options: MealOption[];
-}
-
-interface DayMenu {
+export interface DayMenu {
   date: Date;
   meals: Meal[]; // TODO: change to IRecipes array
 }
 
-interface MonthlyMenu {
+export interface MonthlyMenu {
   menus: DayMenu[];
 }
