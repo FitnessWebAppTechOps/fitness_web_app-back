@@ -1,15 +1,15 @@
 import { IRecipe } from "../utils/interfaces/recipes";
 
-export interface Meal {
+export interface IMeal {
   mealNumber: number;
   options: IRecipe[];
 }
 
-export interface DayMenu {
+export interface IDayMenu {
   date: Date;
-  meals: Meal[]; // TODO: change to IRecipes array
+  meals: IMeal[]; 
 }
 
-export interface MonthlyMenu {
-  menus: DayMenu[];
+export interface IMonthlyMenu {
+  menus: IDayMenu[];
 }
