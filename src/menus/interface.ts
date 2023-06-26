@@ -22,3 +22,4 @@ export interface IMenu {
 export interface IMenuDocument extends IMenu {
   _id?: string;
 }
+
