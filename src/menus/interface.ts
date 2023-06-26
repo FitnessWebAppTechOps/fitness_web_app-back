@@ -7,9 +7,18 @@ export interface IMeal {
 
 export interface IDayMenu {
   date: Date;
-  meals: IMeal[]; 
+  meals: IMeal[];
 }
 
 export interface IMonthlyMenu {
   menus: IDayMenu[];
+}
+
+export interface IMenu {
+  userId: string;
+  monthlyMenus: IMonthlyMenu[];
+}
+
+export interface IMenuDocument extends IMenu {
+  _id?: string;
 }

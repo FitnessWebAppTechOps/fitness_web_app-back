@@ -1,8 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import { config } from "../config";
-import { IMeal, IDayMenu, IMonthlyMenu } from "./interface";
-import { IRecipe } from "../utils/interfaces/recipes";
-import { required } from "joi";
+import {
+  IMeal,
+  IDayMenu,
+  IMonthlyMenu,
+  IMenu,
+  IMenuDocument
+} from "./interface";
 
 const mealSchema: Schema<IMeal> = new Schema<IMeal>({
   mealNumber: {
@@ -11,7 +15,41 @@ const mealSchema: Schema<IMeal> = new Schema<IMeal>({
   },
   options: {
     type: [String],
-    ref: "Recipe",
+    ref: "recipes",
     required: true
   }
 });
+
+const dayMenuSchema: Schema<IDayMenu> = new Schema<IDayMenu>({
+  date: {
+    type: Date,
+    required: true
+  },
+  meals: {
+    type: [mealSchema],
+    required: true
+  }
+});
+
+const monthlyMenuSchema: Schema<IMonthlyMenu> = new Schema<IMonthlyMenu>({
+  menus: {
+    type: [dayMenuSchema],
+    required: true
+  }
+});
+
+const menusSchema: Schema<IMenu> = new Schema<IMenu>({
+  userId: {
+    type: String,
+    required: true
+  },
+  monthlyMenus: {
+    type: [monthlyMenuSchema],
+    required: true
+  }
+});
+
+export const MenusModel = mongoose.model<IMenuDocument>(
+  config.mongo.menusCollectionName,
+  menusSchema
+);

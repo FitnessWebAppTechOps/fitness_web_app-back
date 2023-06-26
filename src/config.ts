@@ -11,7 +11,7 @@ export const config = {
       .default("mongodb://localhost")
       .required()
       .asString(),
-    programsCollectionName: env
+    menusCollectionName: env
       .get("MENUS_COLLECTION_NAME")
       .default("menus")
       .required()
