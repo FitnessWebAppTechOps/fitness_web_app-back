@@ -1,8 +1,6 @@
-import { IRecipe } from "../utils/interfaces/recipes";
-
 export interface IMeal {
   mealNumber: number;
-  options: IRecipe[];
+  options: string[]; //IRecipeDocument ID's
 }
 
 export interface IDayMenu {
@@ -22,4 +20,6 @@ export interface IMenu {
 export interface IMenuDocument extends IMenu {
   _id?: string;
 }
+
+
 

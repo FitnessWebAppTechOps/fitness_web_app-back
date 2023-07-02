@@ -15,7 +15,6 @@ const mealSchema: Schema<IMeal> = new Schema<IMeal>({
   },
   options: {
     type: [String],
-    ref: "recipes",
     required: true
   }
 });

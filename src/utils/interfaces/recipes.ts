@@ -28,3 +28,7 @@ export enum MealType {
   dinner = "DINNER",
   snack = "SNACK"
 }
+
+export interface IRecipeDocument extends IRecipe {
+  _id?: string;
+}
