@@ -39,5 +39,6 @@ export enum FitnessGoal {
 export type Options = string[];
 
 export interface IProgramDocument extends IProgram {
+  
   _id?: string;
 }

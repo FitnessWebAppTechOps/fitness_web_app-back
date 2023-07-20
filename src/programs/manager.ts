@@ -4,12 +4,18 @@ import { IProgram, IProgramDocument } from "./interface";
 import { ProgramsModel } from "./model";
 
 export class ProgramsManager {
-  static async createProgram(program: IProgram) {}
+  static async createProgram(program: IProgram) {
+    return ProgramsModel.create(program);
+  }
 
   static async getProgramById(programId: string): Promise<IProgramDocument> {
     return ProgramsModel.findById(programId)
       .orFail(new ProgramsDocumentNotFoundError(programId))
       .exec();
+  }
+
+  static async getAllPrograms(): Promise<IProgramDocument[]> {
+    return ProgramsModel.find().exec();
   }
 
   static async getProgramsByQuery(
@@ -33,9 +39,5 @@ export class ProgramsManager {
 
   static async deleteProgramById(programId: string): Promise<IProgramDocument> {
     return ProgramsModel.findByIdAndDelete(programId).orFail().exec();
-  }
-
-  static async getAllPrograms(): Promise<IProgramDocument[]> {
-    return ProgramsModel.find().exec();
   }
 }
