@@ -4,7 +4,6 @@ import {
   IProgram,
   TrainingLevel,
   MusclesGroups,
-  Options,
   FitnessGoal,
   IProgramDocument
 } from "./interface";
@@ -49,10 +48,6 @@ const programsSchema: Schema<IProgram> = new Schema<IProgram>({
     type: Date,
     required: true
   }
-  // menu: {
-  //   type: [Options],
-  //   required: true
-  // }
 });
 
 export const ProgramsModel = mongoose.model<IProgramDocument>(

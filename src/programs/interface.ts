@@ -8,7 +8,9 @@ export interface IProgram {
   price: number;
   purchaseDate: Date;
   startingDate: Date;
-  menu: Options[]; // restructure menu field
+  /* menu: IMenu; (menu field is'nt needed because I can check if a user has a menu in his program using a compositor request -
+     I ask for the menu of the program using the user id. of course it is optional fot the user to purchase a menu with his program 
+     so the request might return an error or null / undefined value). */
 }
 
 export enum TrainingLevel {
@@ -34,9 +36,6 @@ export enum FitnessGoal {
   EnduranceTraining = "ENDURANCE_TRAINING",
   GeneralHealthWellness = "GENERAL_HEALTH_WELLNESS"
 }
-
-// array of recipes names (IRecipe.name)
-export type Options = string[];
 
 export interface IProgramDocument extends IProgram {
   
