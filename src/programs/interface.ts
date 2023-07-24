@@ -38,6 +38,5 @@ export enum FitnessGoal {
 }
 
 export interface IProgramDocument extends IProgram {
-  
   _id?: string;
 }
