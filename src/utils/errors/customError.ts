@@ -15,8 +15,3 @@ export class CustomError extends Error {
     this.additionalInfo = additionalInfo;
   }
 }
-
-export interface IResponseError {
-  message: string;
-  additionalInfo?: string;
-}

@@ -1,7 +1,8 @@
 import { CustomError } from "./customError";
 
 export class ClientError extends CustomError {
-  constructor(message: string) {
-    super(message, 400);
+  constructor(additionalData: string) {
+    const message = "Client error!";
+    super(`${message}\n ${additionalData}`, 400);
   }
 }

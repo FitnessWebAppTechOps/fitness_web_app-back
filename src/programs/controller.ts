@@ -4,5 +4,12 @@ import { TypedRequest } from "../utils/zod";
 // import { RecipesManager } from "./manager";
 
 export class ProgramsController {
-    
+  static async createProgram(
+    req: TypedRequest<typeof programsSchema>,
+    res: Response
+  ) {
+    res.json(await MenusManager.createMenu(req.body));
+  }
 }
+
+// TODO: finish controller.

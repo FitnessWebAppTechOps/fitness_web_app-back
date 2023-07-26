@@ -13,3 +13,5 @@ const programsSchema = z.object({
   purchaseDate: z.date(),
   startingDate: z.date()
 });
+
+// TODO: add validations!

@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { ProgramsDocumentNotFoundError } from "../utils/errors/errors";
+import { NotFoundError } from "../utils/errors/notFoundError";
 import { IProgram, IProgramDocument } from "./interface";
 import { ProgramsModel } from "./model";
 
@@ -10,7 +10,7 @@ export class ProgramsManager {
 
   static async getProgramById(programId: string): Promise<IProgramDocument> {
     return ProgramsModel.findById(programId)
-      .orFail(new ProgramsDocumentNotFoundError(programId))
+      .orFail(new NotFoundError(programId))
       .exec();
   }
 
@@ -33,7 +33,7 @@ export class ProgramsManager {
     return ProgramsModel.findByIdAndUpdate(programId, updatedProgram, {
       new: true
     })
-      .orFail(new ProgramsDocumentNotFoundError(programId))
+      .orFail(new NotFoundError(programId))
       .exec();
   }
 
