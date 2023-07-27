@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { TypedRequest } from "../utils/zod";
+import { ProgramsManager } from "./manager";
 // import { createRecipeRequestSchema } from "./validations";
 // import { RecipesManager } from "./manager";
 
@@ -8,7 +9,7 @@ export class ProgramsController {
     req: TypedRequest<typeof programsSchema>,
     res: Response
   ) {
-    res.json(await MenusManager.createMenu(req.body));
+    res.json(await ProgramsManager.createProgram(req.body));
   }
 }
 

@@ -13,6 +13,48 @@ const programsSchema = z.object({
   price: z.number(),
   purchaseDate: z.date(),
   startingDate: z.date()
-}); 
+});
 
-// TODO: add validations!
+const createProgramSchema = z.object({
+  body: programsSchema,
+  query: z.object({}),
+  params: z.object({})
+});
+
+const getProgramByIdSchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({
+    id: zodMongoObjectId
+  })
+});
+
+const getAllProgramsSchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({})
+});
+
+const getProgramsByQuerySchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({
+    query: z.string() // Validation for the 'query' route parameter (string)query
+  })
+});
+
+const updateProgramByIdSchema = z.object({
+  body: programsSchema.partial(),
+  query: z.object({}),
+  params: z.object({
+    id: zodMongoObjectId
+  })
+});
+
+const deleteProgramByIdSchema = z.object({
+  body: z.object({}),
+  query: z.object({}),
+  params: z.object({
+    id: zodMongoObjectId
+  })
+});
