@@ -75,7 +75,7 @@ export class UsersController {
     req: TypedRequest<typeof getUsersCounterRequestSchema>,
     res: Response
   ) {
-    res.json(await UsersManager.getUsersCounter(req.query));
+    res.json(await UsersManager.getUsersCounter());
   }
 
   static async getAllUsers(

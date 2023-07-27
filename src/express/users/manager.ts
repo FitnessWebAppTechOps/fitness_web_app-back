@@ -42,8 +42,8 @@ export class UsersManager {
       .exec();
   }
 
-  static async getUsersCounter(query: Partial<IUser>): Promise<number> {
-    return UserModel.count(query).exec();
+  static async getUsersCounter(): Promise<number> {
+    return UserModel.countDocuments().exec();
   }
 
   static async getAllUsers(): Promise<IUser[]> {
