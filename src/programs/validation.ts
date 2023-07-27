@@ -5,7 +5,7 @@ import { TrainingLevel, MusclesGroups, FitnessGoal } from "./interface";
 
 const programsSchema = z.object({
   userId: zodMongoObjectId,
-  programId: z.number(),
+  programId: z.string(),
   trainingLevel: z.nativeEnum(TrainingLevel),
   musclesGroups: z.nativeEnum(MusclesGroups),
   programLength: z.number(),
@@ -15,13 +15,13 @@ const programsSchema = z.object({
   startingDate: z.date()
 });
 
-const createProgramSchema = z.object({
+export const createProgramSchema = z.object({
   body: programsSchema,
   query: z.object({}),
   params: z.object({})
 });
 
-const getProgramByIdSchema = z.object({
+export const getProgramByIdSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
@@ -29,13 +29,13 @@ const getProgramByIdSchema = z.object({
   })
 });
 
-const getAllProgramsSchema = z.object({
+export const getAllProgramsSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({})
 });
 
-const getProgramsByQuerySchema = z.object({
+export const getProgramsByQuerySchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
@@ -43,7 +43,7 @@ const getProgramsByQuerySchema = z.object({
   })
 });
 
-const updateProgramByIdSchema = z.object({
+export const updateProgramByIdSchema = z.object({
   body: programsSchema.partial(),
   query: z.object({}),
   params: z.object({
@@ -51,7 +51,7 @@ const updateProgramByIdSchema = z.object({
   })
 });
 
-const deleteProgramByIdSchema = z.object({
+export const deleteProgramByIdSchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({

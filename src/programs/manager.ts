@@ -29,7 +29,7 @@ export class ProgramsManager {
   static async updateProgramById(
     programId: string,
     updatedProgram: Partial<IProgram>
-  ): Promise<IProgramDocument | null> {
+  ): Promise<IProgramDocument> {
     return ProgramsModel.findByIdAndUpdate(programId, updatedProgram, {
       new: true
     })

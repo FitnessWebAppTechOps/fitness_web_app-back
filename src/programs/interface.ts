@@ -1,6 +1,6 @@
 export interface IProgram {
-  userId: number;
-  programId: number;
+  userId: string;
+  programId: string;
   trainingLevel: TrainingLevel;
   musclesGroups: MusclesGroups;
   programLength: number;
