@@ -39,7 +39,7 @@ export const getProgramsByQuerySchema = z.object({
   body: z.object({}),
   query: z.object({}),
   params: z.object({
-    query: z.string() // Validation for the 'query' route parameter (string)query
+    query: z.string() // Validation for the 'query' route parameter (string) query
   })
 });
 

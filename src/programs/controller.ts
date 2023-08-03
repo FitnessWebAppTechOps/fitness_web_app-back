@@ -54,5 +54,3 @@ export class ProgramsController {
     res.json(await ProgramsManager.deleteProgramById(req.params.id));
   }
 }
-
-// TODO: finish controller.
